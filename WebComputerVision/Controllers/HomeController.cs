@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -17,6 +17,8 @@ namespace WebComputerVision.Controllers
     {
 
         private const string apiKey = "API KEY HERE";
+        private const string image = "https://southcentralus.api.cognitive.microsoft.com/vision/v1.0/describe";
+        private const string ocr = "https://southcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr";
         private string BytesToSrcString(byte[] bytes) => "data:image/jpg;base64," + Convert.ToBase64String(bytes);
 
         public IActionResult Index()
@@ -47,39 +49,53 @@ namespace WebComputerVision.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Vision(IFormFile file)
+        public async Task<IActionResult> Vision(IFormFile file, string ImageType)
         {
             ViewData["originalImage"] = FileToImgSrcString(file);
             string result = null;
+            string baseUri = "";
+            if (ImageType == "imageRecog")
+            {
+                baseUri = image;
+            }
+            else
+            {
+                baseUri = ocr;
+            }
             using (var httpClient = new HttpClient())
             {
-
-                string baseUri = "https://southcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr";
-
+              
                 httpClient.BaseAddress = new Uri(baseUri);
                 httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
 
                 HttpContent content = new StreamContent(file.OpenReadStream());
                 content.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/octet-stream");
 
+                //make request
                 var response = await httpClient.PostAsync(baseUri, content);
-
+                // get the string for the JSON response
                 string jsonResponse = await response.Content.ReadAsStringAsync();
 
                 var jresult = JObject.Parse(jsonResponse);
 
-                foreach (var region in jresult["regions"])
+                if (ImageType == "imageRecog")
                 {
-                    foreach (var line in region["lines"])
+                    result = jresult["description"]["captions"][0]["text"].ToString();
+                }
+                else
+                {
+                    foreach (var region in jresult["regions"])
                     {
-                        foreach (var word in line["words"])
+                        foreach (var line in region["lines"])
                         {
-                            result = result + " " + word["text"].ToString();
+                            foreach (var word in line["words"])
+                            {
+                                result = result + " " + word["text"].ToString();
+                            }
                         }
                     }
                 }
             }
-
             ViewData["result"] = result;
             return View();
         }

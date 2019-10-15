@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\finne\\source\\repos\\WebComputerVision\\WebComputerVision\\WebComputerVision.csproj": {}
+    "C:\\Users\\finne\\source\\WebComputerVision\\WebComputerVision\\WebComputerVision.csproj": {}
   },
   "projects": {
-    "C:\\Users\\finne\\source\\repos\\WebComputerVision\\WebComputerVision\\WebComputerVision.csproj": {
+    "C:\\Users\\finne\\source\\WebComputerVision\\WebComputerVision\\WebComputerVision.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\finne\\source\\repos\\WebComputerVision\\WebComputerVision\\WebComputerVision.csproj",
+        "projectUniqueName": "C:\\Users\\finne\\source\\WebComputerVision\\WebComputerVision\\WebComputerVision.csproj",
         "projectName": "WebComputerVision",
-        "projectPath": "C:\\Users\\finne\\source\\repos\\WebComputerVision\\WebComputerVision\\WebComputerVision.csproj",
+        "projectPath": "C:\\Users\\finne\\source\\WebComputerVision\\WebComputerVision\\WebComputerVision.csproj",
         "packagesPath": "C:\\Users\\finne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\finne\\source\\repos\\WebComputerVision\\WebComputerVision\\obj\\",
+        "outputPath": "C:\\Users\\finne\\source\\WebComputerVision\\WebComputerVision\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
